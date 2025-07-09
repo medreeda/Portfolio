@@ -1,0 +1,171 @@
+"use client"
+
+import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Mail, MapPin, Github, Linkedin } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
+import { useAdminStore } from "@/lib/admin-store"
+
+export function ContactSection() {
+  const { t, isRTL } = useLanguage()
+  const { personalInfo } = useAdminStore()
+
+  // Defensive checks for translations
+  const contactTranslations = t?.contact || {
+    title: "Get In Touch",
+    subtitle: "I'm always open to discussing new opportunities and interesting projects. Let's connect!",
+    form: {
+      title: "Send me a message",
+      name: "Your Name",
+      email: "Your Email",
+      subject: "Subject",
+      message: "Your Message",
+      send: "Send Message",
+    },
+    info: {
+      title: "Contact Information",
+      email: "Email",
+      location: "Location",
+      locationValue: "Algeria",
+    },
+    social: {
+      title: "Follow Me",
+    },
+    work: {
+      title: "Let's Work Together",
+      description:
+        "I'm currently looking for new opportunities as a junior web developer. If you have a project in mind or want to collaborate, I'd love to hear from you!",
+      downloadCV: "Download CV",
+    },
+  }
+
+  return (
+    <section id="contact" className="py-20">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{contactTranslations.title}</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{contactTranslations.subtitle}</p>
+        </motion.div>
+
+        <div className={`grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto ${isRTL ? "lg:grid-cols-2" : ""}`}>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>{contactTranslations.form?.title || "Send me a message"}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input placeholder={contactTranslations.form?.name || "Your Name"} />
+                  <Input placeholder={contactTranslations.form?.email || "Your Email"} type="email" />
+                </div>
+                <Input placeholder={contactTranslations.form?.subject || "Subject"} />
+                <Textarea placeholder={contactTranslations.form?.message || "Your Message"} rows={6} />
+                <Button className="w-full bg-primary hover:bg-primary/90">
+                  {contactTranslations.form?.send || "Send Message"}
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-6">
+                  {contactTranslations.info?.title || "Contact Information"}
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{contactTranslations.info?.email || "Email"}</p>
+                      <a href="mailto:mohamedredaahmedbetchim@gmail.com" className="text-muted-foreground hover:underline">
+                        {personalInfo.email || "mohamedredaahmedbetchim@gmail.com"}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{contactTranslations.info?.location || "Location"}</p>
+                      <p className="text-muted-foreground">{contactTranslations.info?.locationValue || "Algeria"}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-6">{contactTranslations.social?.title || "Follow Me"}</h3>
+                <div className="flex space-x-4">
+                  <a href="https://github.com/medreeda" target="_blank" rel="noopener noreferrer" className="inline-flex">
+                    <Button variant="outline" size="icon">
+                      <Github className="h-5 w-5" />
+                    </Button>
+                  </a>
+                  <a href="https://www.linkedin.com/in/ahmed-betchim-mohamed-réda-51b658255" target="_blank" rel="noopener noreferrer" className="inline-flex">
+                    <Button variant="outline" size="icon">
+                      <Linkedin className="h-5 w-5" />
+                    </Button>
+                  </a>
+                  <a href="mailto:mohamedredaahmedbetchim@gmail.com" target="_blank" rel="noopener noreferrer" className="inline-flex">
+                    <Button variant="outline" size="icon">
+                      <Mail className="h-5 w-5" />
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-4">
+                  {contactTranslations.work?.title || "Let's Work Together"}
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  {contactTranslations.work?.description ||
+                    "I'm currently looking for new opportunities as a junior web developer. If you have a project in mind or want to collaborate, I'd love to hear from you!"}
+                </p>
+                {personalInfo.cvUrl ? (
+                  <a href={personalInfo.cvUrl} target="_blank" rel="noopener noreferrer">
+                    <Button className="bg-primary hover:bg-primary/90">
+                      {contactTranslations.work?.downloadCV || "Download CV"}
+                    </Button>
+                  </a>
+                ) : (
+                  <Button className="bg-primary hover:bg-primary/90" disabled>
+                    {contactTranslations.work?.downloadCV || "Download CV"}
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}

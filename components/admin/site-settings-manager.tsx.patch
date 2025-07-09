@@ -1,0 +1,192 @@
+import { useState, useEffect } from "react"
+import { useLanguage } from "@/contexts/language-context"
+import { useAdminStore } from "@/lib/admin-store"
+=======
+"use client"
+import { useState, useEffect } from "react"
+import { useLanguage } from "@/contexts/language-context"
+import { useAdminStore } from "@/lib/admin-store"
+
+type ProfileImageType = 
+  | { type: "url"; value: string }
+  | { type: "file"; value: File }
+>>>>>>> REPLACE
+
+<<<<<<< SEARCH
+export function SiteSettingsManager() {
+  const { language, isRTL } = useLanguage()
+  const { siteSettings, updateSiteSettings } = useAdminStore()
+
+  // Initialize profileImage state as type with value
+  const [profileImage, setProfileImage] = useState<ProfileImageType>(
+    siteSettings.profileImage ? { type: "url", value: siteSettings.profileImage } : { type: "url", value: "" }
+  )
+  const [formData, setFormData] = useState({
+    logoImage: siteSettings.logoImage || "",
+    logoText: siteSettings.logoText || "",
+  })
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState("")
+
+  const t = settingsTranslations[language]
+
+  // Sync profileImage and formData with siteSettings when siteSettings changes
+  useEffect(() => {
+    setProfileImage(siteSettings.profileImage ? { type: "url", value: siteSettings.profileImage } : { type: "url", value: "" })
+    setFormData({
+      logoImage: siteSettings.logoImage || "",
+      logoText: siteSettings.logoText || "",
+    })
+  }, [siteSettings])
+=======
+export function SiteSettingsManager() {
+  const { language, isRTL } = useLanguage()
+  const { siteSettings, updateSiteSettings } = useAdminStore()
+
+  // Initialize profileImage state as type with value
+  const [profileImage, setProfileImage] = useState<ProfileImageType>(
+    siteSettings.profileImage ? { type: "url", value: siteSettings.profileImage } : { type: "url", value: "" }
+  )
+  const [formData, setFormData] = useState({
+    logoImage: siteSettings.logoImage || "",
+    logoText: siteSettings.logoText || "",
+  })
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState("")
+
+  const t = settingsTranslations[language]
+
+  // Sync profileImage and formData with siteSettings when siteSettings changes
+  useEffect(() => {
+    setProfileImage(siteSettings.profileImage ? { type: "url", value: siteSettings.profileImage } : { type: "url", value: "" })
+    setFormData({
+      logoImage: siteSettings.logoImage || "",
+      logoText: siteSettings.logoText || "",
+    })
+  }, [siteSettings])
+>>>>>>> REPLACE
+
+<<<<<<< SEARCH
+  const handleSave = async () => {
+    setIsSaving(true)
+
+    let profileImageBase64 = ""
+    if (profileImage.type === "file") {
+      profileImageBase64 = await fileToBase64(profileImage.value)
+    } else {
+      profileImageBase64 = profileImage.value
+    }
+
+    updateSiteSettings({
+      profileImage: profileImageBase64,
+      logoImage: formData.logoImage,
+      logoText: formData.logoText,
+    })
+
+    setSaveMessage(t.saved)
+    setIsSaving(false)
+
+    // Clear success message after 3 seconds
+    setTimeout(() => setSaveMessage(""), 3000)
+  }
+
+  // Handle URL input change
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileImage({ type: "url", value: e.target.value })
+  }
+
+  // Handle file input change to create object URL for preview and store File
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setProfileImage({ type: "file", value: file })
+    }
+  }
+
+  // Create object URL for file preview
+  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (profileImage.type === "file") {
+      const objectUrl = URL.createObjectURL(profileImage.value)
+      setFilePreviewUrl(objectUrl)
+
+      return () => {
+        URL.revokeObjectURL(objectUrl)
+        setFilePreviewUrl(null)
+      }
+    } else {
+      setFilePreviewUrl(null)
+    }
+  }, [profileImage])
+=======
+  const handleSave = async () => {
+    setIsSaving(true)
+
+    let profileImageBase64 = ""
+    if (profileImage.type === "file") {
+      profileImageBase64 = await fileToBase64(profileImage.value)
+    } else {
+      profileImageBase64 = profileImage.value
+    }
+
+    updateSiteSettings({
+      profileImage: profileImageBase64,
+      logoImage: formData.logoImage,
+      logoText: formData.logoText,
+    })
+
+    setSaveMessage(t.saved)
+    setIsSaving(false)
+
+    // Clear success message after 3 seconds
+    setTimeout(() => setSaveMessage(""), 3000)
+  }
+
+  // Handle URL input change
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileImage({ type: "url", value: e.target.value })
+  }
+
+  // Handle file input change to create object URL for preview and store File
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setProfileImage({ type: "file", value: file })
+    }
+  }
+
+  // Create object URL for file preview
+  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (profileImage.type === "file") {
+      const objectUrl = URL.createObjectURL(profileImage.value)
+      setFilePreviewUrl(objectUrl)
+
+      return () => {
+        URL.revokeObjectURL(objectUrl)
+        setFilePreviewUrl(null)
+      }
+    } else {
+      setFilePreviewUrl(null)
+    }
+  }, [profileImage])
+>>>>>>> REPLACE
+
+<<<<<<< SEARCH
+                <Image
+                  key={profileImage.type === "file" ? filePreviewUrl ?? "" : profileImage.value}
+                  src={profileImage.type === "file" ? filePreviewUrl ?? "" : profileImage.value || "/placeholder.svg?height=128&width=128"}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
+=======
+                <Image
+                  key={profileImage.type === "file" ? filePreviewUrl ?? "" : profileImage.value}
+                  src={profileImage.type === "file" ? filePreviewUrl ?? "" : profileImage.value || "/placeholder.svg?height=128&width=128"}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
